@@ -1,0 +1,43 @@
+
+function makeGrid() {
+
+  //Get no. of rows and cols. input
+  var rows = $("#input_height").val();
+  var cols = $("#input_width").val();
+
+  //Get table
+  var table = $("#pixel_canvas");
+
+  //Reset to empty table --- in case one already created
+  table.children().remove();
+
+  //Create rows
+  for (var i = 0; i < rows; i++) {
+    table.append("<tr></tr>");
+    //Create cols
+    for (var j = 0; j < cols; j++) {
+      table.children().last().append("<td></td>");
+    }
+  }
+
+  //Listen for cell clicks
+  table.on("click", "td", function() {
+    //Get color from color picker
+    var color = $("input[type='color']").val();
+    //Apply color to cell
+    $(this).attr("bgcolor", color);
+  });
+}
+
+// Listen for button clicks to trigger makeGrid()
+$("#button").click(function(e) {
+  e.preventDefault(); //Required to avoid submit and page reload
+  makeGrid();
+});
+
+$('#reset').on('click', function(evt2) {
+      evt2.preventDefault();     
+      $("#pixel_canvas").find('tr').remove();
+      $("#pixel_canvas").find('td').remove();
+      $('input[type="number"]').val(1);
+});
